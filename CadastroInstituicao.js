@@ -7,10 +7,10 @@ import ImagePicker from 'react-native-image-picker';
 
 class CadastroInstituicao extends Component {
 
-    static navigationOptions = {
-        drawerLabel: () => null,
-        drawerLockMode: "locked-closed", //->Impede de abrir o Drawer na lateral
-        header: null
+  
+    constructor(props) {
+
+        super(props)
     }
 
     state = {
@@ -36,13 +36,15 @@ class CadastroInstituicao extends Component {
     getImage = async () => {
         const options = {
             title: 'Selecionar Imagem',
-            
-            didCancel: [{ name: 'cancelar', title: 'Cancelar' }],
+            takePhotoButtonTitle: 'Tirar foto',
+            chooseFromLibraryButtonTitle: 'Carregar da Galeria',
+            cancelButtonTitle: 'Cancelar',
             storageOptions: {
                 skipBackup: true,
-                path: 'images',
+                path: 'images'
             },
         };
+
        await ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response);
 
@@ -78,7 +80,7 @@ class CadastroInstituicao extends Component {
         const storageRef = firebase.storage().ref();
 
       
-        const pathT = `testeteste_${Math.floor(Math.random() * 1000 + 1)}`;
+        const pathT = `logo_${Math.floor(Math.random() * 1000 + 1)}`;
         console.log(pathT)
 
         console.log(metadata)
@@ -100,9 +102,6 @@ class CadastroInstituicao extends Component {
       };
      
     
-    
-
-
 
     cadastrar = async () => {
         try {
@@ -227,7 +226,7 @@ class CadastroInstituicao extends Component {
                         <TextInput
                             style={styles.input}
                             placeholder="CNPJ*"
-                            keyboardType="numeric"
+                            keyboardType="phone-pad"
                             underlineColorAndroid="#0069cc"
                             onChangeText={Cnpj => this.setState({ Cnpj })}
                         />
