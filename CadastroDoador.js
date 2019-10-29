@@ -7,7 +7,7 @@ import firebase from "react-native-firebase"
 
 class CadastroDoador extends Component {
 
-  static navigationOptions = {
+    static navigationOptions = {
         drawerLabel: () => null,
         drawerLockMode: "locked-closed", //->Impede de abrir o Drawer na lateral
         header: null
@@ -24,8 +24,10 @@ class CadastroDoador extends Component {
         Telefone: '',
         Email: '',
         Senha: '',
-        message: ""
+        message: "",
     }
+
+
 
     cadastrar = async () => {
         try {
@@ -34,9 +36,8 @@ class CadastroDoador extends Component {
             this.props.navigation.navigate('LoginDoador')
 
             const { uid } = firebase.auth().currentUser
-
-
-            const {Nome,
+            const uidgerado = uid;
+            const { Nome,
                 Cpf,
                 Endereco,
                 Cidade,
@@ -62,7 +63,7 @@ class CadastroDoador extends Component {
                     Email,
                     Senha,
                     message: "",
-
+                    uid: uidgerado
 
                 })
             ToastAndroid.show('Cadastro realizado com sucesso!', ToastAndroid.SHORT)
@@ -75,12 +76,11 @@ class CadastroDoador extends Component {
         }
 
     }
-
-
     //Função que trata erro dos campos email e senha do cadastro 
     getMessageByErrorCode(errorCode) {
         console.log(errorCode)
         switch (errorCode) {
+
             case 'auth/weak-password':
                 return 'Insira uma senha válida!';
             case 'auth/invalid-email':
@@ -90,6 +90,7 @@ class CadastroDoador extends Component {
 
         }
     }
+
     renderMessage() {
         const { message } = this.state;
         if (!message)
@@ -101,11 +102,7 @@ class CadastroDoador extends Component {
         );
     }
 
-    static navigationOptions = {
-        drawerLabel: () => null,
-        drawerLockMode: "locked-closed", //->Impede de abrir o Drawer na lateral
-        header: null
-    }
+
 
     render() {
         return (
@@ -170,7 +167,7 @@ class CadastroDoador extends Component {
                         <TextInput
                             style={styles.input}
                             placeholder="Telefone*"
-                            maxLength={11}
+                            maxLength={15}
                             keyboardType="phone-pad"
                             underlineColorAndroid="#0069cc"
                             onChangeText={Telefone => this.setState({ Telefone })}
